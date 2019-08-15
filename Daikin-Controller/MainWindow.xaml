@@ -1,0 +1,86 @@
+﻿<Window x:Class="DaikinController.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewModels="clr-namespace:DaikinController.ViewModels"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel />
+    </Window.DataContext>
+    <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <!--<materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="212">
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                    <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"
+                             ItemsSource="{Binding DemoItems}"
+                             PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp">
+                        <ListBox.Resources>
+                            <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}"/>
+                        </ListBox.Resources>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="domain:DemoItem">
+                                <TextBlock Text="{Binding Name}" Margin="32 0 32 0" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>-->
+            <DockPanel>
+                <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                            Mode="PrimaryMid" DockPanel.Dock="Top">
+                    <DockPanel>
+
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                                        x:Name="MenuToggleButton"/>
+
+                        <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                            <StackPanel>
+                                <Button Content="Hello World"/>
+                                <Button Content="Nice Popup"/>
+                                <Button Content="Can't Touch This" IsEnabled="False" />
+                                <Separator/>
+                                <Button Content="Goodbye"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+
+                        <Button DockPanel.Dock="Right" Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon Kind="Refresh" />
+                        </Button>
+
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">PAGE TITLE TO DO REPLACE</TextBlock>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <!--<domain1:DocumentationLinks DataContext="{Binding ElementName=DemoItemsListBox, Path=SelectedItem}"
+                                                Margin="0 0 0 16"
+                                                />-->
+                    <ContentControl Content="{Binding CurrentView}" />
+                    <!--<ScrollViewer Grid.Row="1" 
+                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                                  Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+                        
+                    </ScrollViewer>-->
+
+                    <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"
+                                            Grid.Row="1" />
+                </Grid>
+            </DockPanel>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
+</Window>
