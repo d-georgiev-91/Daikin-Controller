@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:DaikinController.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <viewModels:HomeViewModel x:Key="HomeViewModel"/>
-    </UserControl.Resources>
+    <UserControl.DataContext>
+        <viewModels:HomeViewModel />
+    </UserControl.DataContext>
     <Grid>
-        <!-- and here's another -->
         <ItemsControl
-            ItemsSource="{Binding Units}"
+            ItemsSource="{Binding Path=Units}"
             Grid.IsSharedSizeScope="True">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -22,29 +22,49 @@
                         Padding="8"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{DynamicResource MaterialDesignDivider}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <!--<Grid.ColumnDefinitions>
                                 <ColumnDefinition
                                     SharedSizeGroup="Checkerz" />
                                 <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                            </Grid.ColumnDefinitions>-->
                             <ToggleButton
                                 VerticalAlignment="Center"
-                                IsChecked="{Binding IsSelected}"
-                                Style="{StaticResource MaterialDesignActionLightToggleButton}"
-                                Content="{Binding Code}" />
-                            <StackPanel
-                                Margin="8 0 0 0"
-                                Grid.Column="1">
-                                <TextBlock
+                                IsChecked="{Binding Power}"
+                                Style="{StaticResource MaterialDesignActionLightToggleButton}">
+                                <ToggleButton.Content>
+                                    <materialDesign:PackIcon Kind="Power" ToolTip="Power" />
+                                </ToggleButton.Content>
+                                <materialDesign:ToggleButtonAssist.OnContent>
+                                    <materialDesign:PackIcon Kind="PowerOff" ToolTip="Power off" />
+                                </materialDesign:ToggleButtonAssist.OnContent>
+                            </ToggleButton>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock 
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                     FontWeight="Bold"
                                     Text="{Binding Name}" />
-                                <TextBlock
-                                    Text="{Binding Description}" />
-                            </StackPanel>
-                        </Grid>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="{Binding IndoorTemperature}"/>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="1"
+                                           Text="{Binding TargetTemperature}"/>
+                            </Grid>
+                        </StackPanel>
                     </Border>
-                    <DataTemplate.Triggers>
+                    <!--<DataTemplate.Triggers>
                         <DataTrigger
                             Binding="{Binding IsSelected}"
                             Value="True">
@@ -53,7 +73,7 @@
                                 Property="Background"
                                 Value="{DynamicResource MaterialDesignSelection}" />
                         </DataTrigger>
-                    </DataTemplate.Triggers>
+                    </DataTemplate.Triggers>-->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

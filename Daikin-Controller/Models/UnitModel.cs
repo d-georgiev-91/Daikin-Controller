@@ -6,9 +6,9 @@
 
         public double IndoorTemperature { get; set; }
 
-        public double OutdoorTemperature { get; set; }
+        public double TargetTemperature { get; set; }
 
-        public Power Power { get; set; }
+        public bool Power { get; set; }
 
         public Mode Mode { get; set; }
     }
