@@ -1,4 +1,6 @@
-﻿namespace DaikinSerializers.Test.Models
+﻿using DaikinController.Serializers;
+
+namespace DaikinSerializers.Test.Models
 {
     public class BasicInfo
     {
@@ -11,6 +13,9 @@
         public double Stemp { get; set; }
 
         public string Adv { get; set; }
+
+        [SerializerContract(Decode = true)]
+        public string Name { get; set; }
     }
 
     public enum Power
