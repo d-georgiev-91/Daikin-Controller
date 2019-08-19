@@ -30,17 +30,17 @@ namespace DaikinController
 
         public DeviceDiscoverer()
         {
-            Serializer = new DaikinSerializer<DiscoveryInfo>();
+            Serializer = new DaikinSerializer<DiscoveryInfoModel>();
             udpClient = new UdpClient();
             sendData = Encoding.UTF8.GetBytes(UDP_DATA);
             recieveAttempts = RECEIVE_ATTEMPTS;
         }
 
-        private DaikinSerializer<DiscoveryInfo> Serializer { get; }
+        private DaikinSerializer<DiscoveryInfoModel> Serializer { get; }
 
-        public async Task<IEnumerable<DiscoveryInfo>> Discover()
+        public async Task<IEnumerable<DiscoveryInfoModel>> Discover()
         {
-            var devices = new List<DiscoveryInfo>();
+            var devices = new List<DiscoveryInfoModel>();
 
             udpClient.Client.Bind(new IPEndPoint(IPAddress.Parse(LISTEN_IP), LISTEN_PORT));
             udpClient.EnableBroadcast = true;

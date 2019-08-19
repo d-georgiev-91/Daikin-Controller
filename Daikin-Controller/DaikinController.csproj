@@ -75,7 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\DiscoveryInfo.cs" />
+    <Compile Include="Models\DiscoveryInfoModel.cs" />
     <Compile Include="Models\Mode.cs" />
     <Compile Include="Models\Power.cs" />
     <Compile Include="Models\UnitModel.cs" />
