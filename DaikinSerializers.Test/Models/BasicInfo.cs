@@ -10,7 +10,7 @@ namespace DaikinSerializers.Test.Models
 
         public int Mode { get; set; }
 
-        public double Stemp { get; set; }
+        public double? Stemp { get; set; }
 
         public string Adv { get; set; }
 

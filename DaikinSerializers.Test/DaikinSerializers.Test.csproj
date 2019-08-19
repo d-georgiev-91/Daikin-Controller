@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DaikinSerializerDeserializeTests.cs" />
     <Compile Include="Models\BasicInfo.cs" />
+    <Compile Include="Models\SensorInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
