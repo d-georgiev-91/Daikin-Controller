@@ -139,9 +139,12 @@ namespace DaikinController.Serializers
                 // thus Cast exception is required
                 try
                 {
-                    propertyValue = Convert.ChangeType(dataValue, modelProperty.Value.PropertyType, CultureInfo.InvariantCulture);
+                    var propertyType = Nullable.GetUnderlyingType(modelProperty.Value.PropertyType) ??
+                                       modelProperty.Value.PropertyType;
+
+                    propertyValue = Convert.ChangeType(dataValue, propertyType, CultureInfo.InvariantCulture);
                 }
-                catch (InvalidCastException e)
+                catch (SystemException e) when (e is InvalidCastException || e is FormatException)
                 {
                     Debug.WriteLine(e.Message);
                     propertyValue = null;
