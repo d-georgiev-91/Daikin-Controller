@@ -1,31 +1,28 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using DaikinController.Models;
+using DaikinController.Serializers;
 
 namespace DaikinController.Services
 {
     public class DaikinService
     {
-        public IEnumerable<UnitModel> GetUnits()
+        private HttpClient client;
+        private const string ROUTE_URL = "http://{0}/{1}";
+
+
+        public DaikinService()
         {
-            return new List<UnitModel>
-            {
-                new UnitModel
-                {
-                    Name = "Kids Room",
-                    TargetTemperature = 18.0,
-                    IndoorTemperature = 23.0,
-                    Mode = Mode.Cold,
-                    Power = true
-                },
-                new UnitModel
-                {
-                    Name = "Living Room",
-                    TargetTemperature = 23.0,
-                    IndoorTemperature= 24.0,
-                    Mode = Mode.Auto,
-                    Power = false
-                }
-            };
+            this.client = new HttpClient();
+        }
+
+        public async Task<IEnumerable<DiscoveryInfoModel>> GetUnits()
+        {
+            var discoverer = new DeviceDiscoverer();
+            var units = await discoverer.Discover();
+
+            return units;
         }
     }
 }
