@@ -6,6 +6,6 @@ namespace DaikinController.Serializers
     {
         public string PropertyMap { get; set; }
 
-        public bool Decode { get; set; }
+        public bool Encodable { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace DaikinController.Serializers
 {
@@ -22,6 +23,72 @@ namespace DaikinController.Serializers
 
                 return modelProperties;
             }
+        }
+
+        public string Serialize(T model)
+        {
+            var buffer = new StringBuilder();
+            int currentIndex = 0;
+
+            foreach (var modelProperty in ModelProperties)
+            {
+
+                var serializerContract = modelProperty.Value.GetCustomAttribute<SerializerContractAttribute>();
+                string key;
+
+                if (serializerContract != null && !string.IsNullOrWhiteSpace(serializerContract.PropertyMap))
+                {
+                    key = serializerContract.PropertyMap;
+                }
+                else
+                {
+
+                    key = modelProperty.Key;
+                }
+
+                string value = ConvertToString(model, modelProperty.Value);
+
+                if (serializerContract != null && serializerContract.Encodable)
+                {
+                    value = Encoder.Encode(value);
+                }
+
+                buffer.Append($"{key}={value}");
+
+                if (currentIndex < modelProperties.Count - 1)
+                {
+                    buffer.Append("&");
+                }
+
+                currentIndex++;
+            }
+
+            return buffer.ToString();
+        }
+
+        private static string ConvertToString(T model, PropertyInfo property)
+        {
+            var rawValue = property.GetValue(model);
+
+            // Verify how null parameters are send
+            if (rawValue == null)
+            {
+                return "null";
+            }
+
+            if (property.PropertyType.IsEnum)
+            {
+                return Convert.ToString((int)rawValue, CultureInfo.InvariantCulture);
+            }
+
+            if (property.PropertyType == typeof(bool) || property.PropertyType == typeof(bool?))
+            {
+
+                var value = rawValue;
+                return (bool)value ? "1" : "0";
+            }
+
+            return Convert.ToString(rawValue, CultureInfo.InvariantCulture);
         }
 
         public T Deserialize(string data)
@@ -54,9 +121,9 @@ namespace DaikinController.Serializers
                 dataValue = keyValuePairs[modelProperty.Key];
             }
 
-            if (serializerContract != null && serializerContract.Decode && dataValue != null)
+            if (serializerContract != null && serializerContract.Encodable && dataValue != null)
             {
-                dataValue = Uri.UnescapeDataString(dataValue);
+                dataValue = Encoder.Decode(dataValue);
             }
 
 

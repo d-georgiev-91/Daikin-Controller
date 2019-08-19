@@ -14,8 +14,12 @@ namespace DaikinSerializers.Test.Models
 
         public string Adv { get; set; }
 
-        [SerializerContract(Decode = true)]
+        [SerializerContract(Encodable = true)]
         public string Name { get; set; }
+
+        public bool Enabled { get; set; }
+
+        public bool? BoolNullabe { get; set; }
     }
 
     public enum Power
