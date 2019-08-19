@@ -6,16 +6,34 @@ namespace DaikinController.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private ObservableCollection<UnitModel> units;
+        private ObservableCollection<DiscoveryInfoModel> units;
 
         public HomeViewModel() : base(new DaikinService())
         {
-            
         }
 
-        public ObservableCollection<UnitModel> Units    
+        private async void LoadData()
         {
-            get => units ?? (units = new ObservableCollection<UnitModel>(DaikinService.GetUnits()));
+            var units = await DaikinService.GetUnits();
+
+            foreach (var unit in units)
+            {
+                Units.Add(unit);
+            }
+        }
+
+        public ObservableCollection<DiscoveryInfoModel> Units
+        {
+            get
+            {
+                if (units == null)
+                {
+                    units = new ObservableCollection<DiscoveryInfoModel>();
+                    this.LoadData();
+                }
+
+                return units;
+            }
             set
             {
                 units = value;
