@@ -37,6 +37,12 @@ namespace DaikinController.Serializers
                 if (ModelProperties.ContainsKey(key))
                 {
                     var property = ModelProperties[key];
+                    var serializerContractAttribute = property.GetCustomAttribute<SerializerContractAttribute>();
+
+                    if (value != null && serializerContractAttribute != null && serializerContractAttribute.Decode)
+                    {
+                        value = Uri.UnescapeDataString(value);
+                    }
 
                     object proeprtyValue = property.PropertyType.IsEnum ? int.Parse(value) : Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
 

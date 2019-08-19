@@ -80,6 +80,7 @@
     <Compile Include="Models\Power.cs" />
     <Compile Include="Models\UnitModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Serializers\SerializerContractAttribute.cs" />
     <Compile Include="UnicastIPAddressInformationExtensions.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Services\DaikinService.cs" />
