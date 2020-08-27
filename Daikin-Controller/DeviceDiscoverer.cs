@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,7 +53,7 @@ namespace DaikinController
 
             var receiveResult = await udpClient.ReceiveAsync();
 
-            string message = Encoding.ASCII.GetString(receiveResult.Buffer);
+            var message = Encoding.ASCII.GetString(receiveResult.Buffer);
             var deviceInfo = Serializer.Deserialize(message);
             deviceInfo.IP = receiveResult.RemoteEndPoint.Address.ToString();
 
