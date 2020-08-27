@@ -10,5 +10,7 @@ namespace DaikinController.Models
         public string Name { get; set; }
 
         public string Type { get; set; }
+
+        public bool Power { get; set; }
     }
 }
